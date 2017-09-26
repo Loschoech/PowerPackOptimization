@@ -17,7 +17,7 @@ import javafx.scene.layout.AnchorPane;
 import javafx.scene.layout.BorderPane;
 import javafx.stage.Stage;
 import powerpackoptimization.model.Limitation;
-
+import powerpackoptimization.view.PowerPackOverviewController;
 
 /**
  *
@@ -96,6 +96,11 @@ public class PowerPackOptimization extends Application {
 
             // Set person overview into the center of root layout.
             rootLayout.setCenter(personOverview);
+            
+            // Give the controller access to the main app.
+            PowerPackOverviewController controller = loader.getController();
+            controller.setPowerPackOptimization(this);
+            
         } catch (IOException e) {
             e.printStackTrace();
         }

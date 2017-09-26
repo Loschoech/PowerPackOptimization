@@ -19,69 +19,69 @@ public class Limitation {
     
     private final StringProperty Name;
 
-    private String getName() {
+    public String getName() {
         return Name.get();
     }
 
-    private void setName(String value) {
+    public void setName(String value) {
         Name.set(value);
     }
 
-    private StringProperty NameProperty() {
+    public StringProperty NameProperty() {
         return Name;
     }
     
     private final StringProperty Unit;
 
-    private String getUnit() {
+    public String getUnit() {
         return Unit.get();
     }
 
-    private void setUnit(String value) {
+    public void setUnit(String value) {
         Unit.set(value);
     }
 
-    private StringProperty UnitProperty() {
+    public StringProperty UnitProperty() {
         return Unit;
     }
     private final DoubleProperty min;
 
-    private double getMin() {
+    public double getMin() {
         return min.get();
     }
 
-    private void setMin(double value) {
+    public void setMin(double value) {
         min.set(value);
     }
 
-    private DoubleProperty minProperty() {
+    public DoubleProperty minProperty() {
         return min;
     }
     private final DoubleProperty step;
 
-    private double getStep() {
+    public double getStep() {
         return step.get();
     }
 
-    private void setStep(double value) {
+    public void setStep(double value) {
         step.set(value);
     }
 
-    private DoubleProperty stepProperty() {
+    public DoubleProperty stepProperty() {
         return step;
     }
     
     private final DoubleProperty max;
 
-    private double getMax() {
+    public double getMax() {
         return max.get();
     }
 
-    private void setMax(double value) {
+    public void setMax(double value) {
         max.set(value);
     }
 
-    private DoubleProperty maxProperty() {
+    public DoubleProperty maxProperty() {
         return max;
     }
     
