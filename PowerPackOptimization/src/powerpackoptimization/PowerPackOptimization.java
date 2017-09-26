@@ -9,11 +9,14 @@ package powerpackoptimization;
 import java.io.IOException;
 
 import javafx.application.Application;
+import javafx.collections.FXCollections;
+import javafx.collections.ObservableList;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Scene;
 import javafx.scene.layout.AnchorPane;
 import javafx.scene.layout.BorderPane;
 import javafx.stage.Stage;
+import powerpackoptimization.model.Limitation;
 
 
 /**
@@ -25,16 +28,42 @@ public class PowerPackOptimization extends Application {
     private Stage primaryStage;
     private BorderPane rootLayout;
     
+    /**
+     * The data as an observable list of Limitations.
+     */
+    private final ObservableList<Limitation> MotorLimitations = FXCollections.observableArrayList();
+    private final ObservableList<Limitation> ECULimitations = FXCollections.observableArrayList();
+    
+    
     @Override
     public void start(Stage primaryStage) {
         this.primaryStage = primaryStage;
         this.primaryStage.setTitle("PowerPack Optimization");
         
         initRootLayout();
-        
         showPowerPackOverview();
+        
+        /**
+         * Add Limitations
+         */
+        
+        MotorLimitations.add(new Limitation("StackLength","mm"));
+        MotorLimitations.add(new Limitation("StatorInnerDiameter","mm"));
 
     }
+  
+     /**
+     * Returns the data as an observable list of Limitations. 
+     * @return
+     */
+    public ObservableList<Limitation> getMotorLimitationsData() {
+        return MotorLimitations;
+    }
+    
+    public ObservableList<Limitation> getECULimitationsData() {
+        return ECULimitations;
+    }
+    
     /**
      * Initializes the root layout.
      */
@@ -53,7 +82,6 @@ public class PowerPackOptimization extends Application {
         } catch (IOException e) {
             e.printStackTrace();
         }
-        
     }
     
         /**
