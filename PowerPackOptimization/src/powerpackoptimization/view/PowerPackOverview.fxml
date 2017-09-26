@@ -23,7 +23,10 @@
                   </TableView>
                </children>
             </AnchorPane>
-          <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="160.0" prefWidth="100.0" />
+          <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="160.0" prefWidth="100.0">
+               <children>
+                  <Button layoutX="14.0" layoutY="28.0" mnemonicParsing="false" onAction="#handleEditLimitation" text="Edit Limitation" />
+               </children></AnchorPane>
         </items>
       </SplitPane>
    </children>

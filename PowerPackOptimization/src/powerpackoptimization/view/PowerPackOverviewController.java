@@ -11,7 +11,8 @@ package powerpackoptimization.view;
  */
 
 import javafx.fxml.FXML;
-import javafx.scene.control.Label;
+import javafx.scene.control.Alert;
+import javafx.scene.control.Alert.AlertType;
 import javafx.scene.control.TableColumn;
 import javafx.scene.control.TableView;
 import powerpackoptimization.PowerPackOptimization;
@@ -72,6 +73,26 @@ public class PowerPackOverviewController {
         // Add observable list data to the table
         powerpackTable.setItems(powerpackOptimization.getMotorLimitationsData());
     }
-    
+    /**
+ * Called when the user clicks the edit button. Opens a dialog to edit
+ * details for the selected person.
+ */
+@FXML
+private void handleEditLimitation() {
+    Limitation selectedLimitation = powerpackTable.getSelectionModel().getSelectedItem();
+    if (selectedLimitation != null) {
+        powerpackOptimization.showLimitationEditDialog(selectedLimitation);
+    } else {
+        // Nothing selected.
+        Alert alert = new Alert(AlertType.WARNING);
+        alert.initOwner(powerpackOptimization.getPrimaryStage());
+        alert.setTitle("No Selection");
+        alert.setHeaderText("No Limitation Selected");
+        alert.setContentText("Please select a limitation in the table.");
+
+        alert.showAndWait();
+    }
+}
+
 
 }
