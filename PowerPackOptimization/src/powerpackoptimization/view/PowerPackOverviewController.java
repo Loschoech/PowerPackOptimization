@@ -17,6 +17,7 @@ import javafx.scene.control.TableColumn;
 import javafx.scene.control.TableView;
 import powerpackoptimization.PowerPackOptimization;
 import powerpackoptimization.model.Limitation;
+import powerpackoptimization.model.SaveLoadConfig;
 
 
 public class PowerPackOverviewController {
@@ -51,7 +52,7 @@ public class PowerPackOverviewController {
      */
     @FXML
     private void initialize() {
-        // Initialize the powerpack table with the five columns.
+        // Initialize the limitations table with the five columns.
         NameColumn.setCellValueFactory(cellData -> cellData.getValue().NameProperty());
         UnitColumn.setCellValueFactory(cellData -> cellData.getValue().UnitProperty());
         MinColumn.setCellValueFactory(cellData -> cellData.getValue().minProperty().asString());
@@ -93,6 +94,9 @@ private void handleEditLimitation() {
         alert.showAndWait();
     }
 }
-
-
+@FXML
+private void handleSaveConfig() {
+     SaveLoadConfig.SaveConfig(powerpackOptimization.getMotorLimitationsData(),powerpackOptimization.getECULimitationsData());
+    
+    }
 }
