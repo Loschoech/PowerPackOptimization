@@ -13,6 +13,7 @@ package powerpackoptimization.view;
 import javafx.fxml.FXML;
 import javafx.scene.control.Alert;
 import javafx.scene.control.Alert.AlertType;
+import javafx.scene.control.Label;
 import javafx.scene.control.TableColumn;
 import javafx.scene.control.TableView;
 import powerpackoptimization.PowerPackOptimization;
@@ -35,6 +36,8 @@ public class PowerPackOverviewController {
     @FXML
     private TableColumn<Limitation, String> StepColumn;
     
+    @FXML 
+    private Label Nanoseconds;
     
      // Reference to the main application.
     private PowerPackOptimization powerpackOptimization;
@@ -69,8 +72,7 @@ public class PowerPackOverviewController {
      */
     public void setPowerPackOptimization(PowerPackOptimization powerpackOptimization) {
         this.powerpackOptimization = powerpackOptimization; 
-        
-
+       
         // Add observable list data to the table
         powerpackTable.setItems(powerpackOptimization.getMotorLimitationsData());
     }
@@ -83,6 +85,7 @@ private void handleEditLimitation() {
     Limitation selectedLimitation = powerpackTable.getSelectionModel().getSelectedItem();
     if (selectedLimitation != null) {
         powerpackOptimization.showLimitationEditDialog(selectedLimitation);
+        Nanoseconds.setText(String.valueOf(powerpackOptimization.calc_time) + " ns");
     } else {
         // Nothing selected.
         Alert alert = new Alert(AlertType.WARNING);
@@ -96,7 +99,12 @@ private void handleEditLimitation() {
 }
 @FXML
 private void handleSaveConfig() {
-     SaveLoadConfig.SaveConfig(powerpackOptimization.getMotorLimitationsData(),powerpackOptimization.getECULimitationsData());
+     SaveLoadConfig.SaveConfig(powerpackOptimization);
+    
+    }
+@FXML
+private void handleLoadConfig() {
+     SaveLoadConfig.LoadConfig(powerpackOptimization);
     
     }
 }

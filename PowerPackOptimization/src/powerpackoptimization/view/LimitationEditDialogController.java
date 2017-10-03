@@ -108,6 +108,7 @@ public class LimitationEditDialogController {
     }
 
     /**
+     * 
      * Validates the user input in the text fields.
      * 
      * @return true if the input is valid

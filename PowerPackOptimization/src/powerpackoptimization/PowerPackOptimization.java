@@ -29,12 +29,17 @@ public class PowerPackOptimization extends Application {
     
     private Stage primaryStage;
     private BorderPane rootLayout;
+    public long calc_time;
     
     /**
      * The data as an observable list of Limitations.
      */
     private final ObservableList<Limitation> MotorLimitations = FXCollections.observableArrayList();
     private final ObservableList<Limitation> ECULimitations = FXCollections.observableArrayList();
+
+    public PowerPackOptimization() {
+        this.calc_time = 0;
+    }
     
     
     @Override
@@ -51,8 +56,18 @@ public class PowerPackOptimization extends Application {
         
         MotorLimitations.add(new Limitation("StackLength","mm"));
         MotorLimitations.add(new Limitation("StatorInnerDiameter","mm"));
-
+        
+        /** 
+         * Measure one Calculationtime
+         */
+        final long timeStart = System.nanoTime(); 
+        for (int i = 0; i < 1000000; i++) { 
+            int x = i/2; 
+        } 
+        final long timeEnd = System.nanoTime();
+        calc_time = (timeEnd-timeStart)/1000000;
     }
+    
   
      /**
      * Returns the data as an observable list of Limitations. 
