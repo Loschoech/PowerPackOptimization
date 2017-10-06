@@ -10,21 +10,24 @@ package powerpackoptimization.view;
  * @author Stefan Loacker-Schöch
  */
 
+import javafx.event.EventHandler;
 import javafx.fxml.FXML;
 import javafx.scene.control.Alert;
 import javafx.scene.control.Alert.AlertType;
 import javafx.scene.control.Label;
 import javafx.scene.control.TableColumn;
 import javafx.scene.control.TableView;
+import javafx.scene.input.MouseButton;
+import javafx.scene.input.MouseEvent;
 import powerpackoptimization.PowerPackOptimization;
 import powerpackoptimization.model.Limitation;
 import powerpackoptimization.model.SaveLoadConfig;
 
 
-public class PowerPackOverviewController {
+public class MotorOverviewController {
   
     @FXML
-    private TableView<Limitation> powerpackTable;
+    private TableView<Limitation> motorlimitationsTable;
     @FXML
     private TableColumn<Limitation, String> NameColumn;
     @FXML
@@ -46,8 +49,11 @@ public class PowerPackOverviewController {
      * The constructor.
      * The constructor is called before the initialize() method.
      */
-    public PowerPackOverviewController(){
+    public MotorOverviewController(){
         
+            
+    
+          
     }
     /**
      * Initializes the controller class. This method is automatically called
@@ -63,6 +69,7 @@ public class PowerPackOverviewController {
         MaxColumn.setCellValueFactory(cellData -> cellData.getValue().maxProperty().asString());
         StepColumn.setCellValueFactory(cellData -> cellData.getValue().stepProperty().asString());
         
+   
 
     }
      /**
@@ -74,15 +81,27 @@ public class PowerPackOverviewController {
         this.powerpackOptimization = powerpackOptimization; 
        
         // Add observable list data to the table
-        powerpackTable.setItems(powerpackOptimization.getMotorLimitationsData());
+        motorlimitationsTable.setItems(powerpackOptimization.getMotorLimitationsData());
+        
+        motorlimitationsTable.setOnMouseClicked(new EventHandler<MouseEvent>(){
+                @Override    
+                public void handle(MouseEvent mouseEvent){
+                    if(mouseEvent.getButton().equals(MouseButton.PRIMARY)){
+                        if(mouseEvent.getClickCount() == 2){
+                            handleEditLimitation();
+                        }
+                    }
+                }
+            });
     }
     /**
  * Called when the user clicks the edit button. Opens a dialog to edit
  * details for the selected person.
  */
-@FXML
+
 private void handleEditLimitation() {
-    Limitation selectedLimitation = powerpackTable.getSelectionModel().getSelectedItem();
+   
+    Limitation selectedLimitation = motorlimitationsTable.getSelectionModel().getSelectedItem();
     if (selectedLimitation != null) {
         powerpackOptimization.showLimitationEditDialog(selectedLimitation);
         Nanoseconds.setText(String.valueOf(powerpackOptimization.calc_time) + " ns");

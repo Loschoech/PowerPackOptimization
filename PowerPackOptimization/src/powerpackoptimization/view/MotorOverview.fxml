@@ -1,0 +1,81 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.chart.*?>
+<?import java.lang.*?>
+<?import java.util.*?>
+<?import javafx.scene.*?>
+<?import javafx.scene.control.*?>
+<?import javafx.scene.layout.*?>
+
+<AnchorPane id="AnchorPane" prefHeight="768.0" prefWidth="1024.0" xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1" fx:controller="powerpackoptimization.view.MotorOverviewController">
+   <children>
+  <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="768.0" prefWidth="1024.0" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
+         <children>
+            <SplitPane dividerPositions="0.4899665551839465" prefHeight="400.0" prefWidth="600.0" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
+              <items>
+                <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="160.0" prefWidth="100.0">
+                     <children>
+                        <TableView fx:id="motorlimitationsTable" layoutX="31.0" layoutY="99.0" prefHeight="398.0" prefWidth="287.0" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
+                          <columns>
+                            <TableColumn fx:id="NameColumn" prefWidth="75.0" text="Limitation" />
+                            <TableColumn fx:id="UnitColumn" prefWidth="75.0" text="Unit" />
+                              <TableColumn fx:id="MinColumn" prefWidth="75.0" text="Min" />
+                              <TableColumn fx:id="MaxColumn" prefWidth="75.0" text="Max" />
+                              <TableColumn fx:id="StepColumn" prefWidth="75.0" text="step" />
+                          </columns>
+                        </TableView>
+                     </children>
+                  </AnchorPane>
+                <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="160.0" prefWidth="100.0">
+                     <children>
+                        <GridPane prefHeight="766.0" prefWidth="515.0" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
+                          <columnConstraints>
+                            <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0" />
+                          </columnConstraints>
+                          <rowConstraints>
+                            <RowConstraints maxHeight="414.0" minHeight="10.0" prefHeight="300.0" vgrow="SOMETIMES" />
+                            <RowConstraints maxHeight="563.0" minHeight="10.0" prefHeight="408.0" vgrow="SOMETIMES" />
+                          </rowConstraints>
+                           <children>
+                              <VBox alignment="CENTER" prefHeight="257.0" prefWidth="510.0">
+                                 <children>
+                                    <Label fx:id="Nanoseconds" text="Label" />
+                                 </children>
+                              </VBox>
+                              <GridPane prefHeight="443.0" prefWidth="518.0" GridPane.rowIndex="1">
+                                <columnConstraints>
+                                  <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0" />
+                                    <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0" />
+                                  <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0" />
+                                </columnConstraints>
+                                <rowConstraints>
+                                  <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
+                                </rowConstraints>
+                                 <children>
+                                    <TableView prefHeight="200.0" prefWidth="200.0">
+                                      <columns>
+                                        <TableColumn prefWidth="171.0" text="Wire" />
+                                      </columns>
+                                    </TableView>
+                                    <TableView prefHeight="200.0" prefWidth="200.0" GridPane.columnIndex="1">
+                                      <columns>
+                                        <TableColumn prefWidth="170.0" text="Electrical Sheet" />
+                                      </columns>
+                                    </TableView>
+                                    <TableView prefHeight="200.0" prefWidth="200.0" GridPane.columnIndex="2">
+                                      <columns>
+                                        <TableColumn prefWidth="170.0" text="Interfaces" />
+                                      </columns>
+                                    </TableView>
+                                 </children>
+                              </GridPane>
+                           </children>
+                        </GridPane>
+                     </children>
+                  </AnchorPane>
+              </items>
+            </SplitPane>
+         </children>
+      </AnchorPane>
+   </children>
+</AnchorPane>

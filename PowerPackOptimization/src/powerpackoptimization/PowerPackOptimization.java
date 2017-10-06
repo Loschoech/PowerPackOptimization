@@ -15,11 +15,14 @@ import javafx.fxml.FXMLLoader;
 import javafx.scene.Scene;
 import javafx.scene.layout.AnchorPane;
 import javafx.scene.layout.BorderPane;
+import javafx.scene.control.Tab;
+import javafx.scene.control.TabPane;
 import javafx.stage.Modality;
 import javafx.stage.Stage;
 import powerpackoptimization.model.Limitation;
 import powerpackoptimization.view.LimitationEditDialogController;
-import powerpackoptimization.view.PowerPackOverviewController;
+import powerpackoptimization.view.MotorOverviewController;
+import powerpackoptimization.view.RootLayoutController;
 
 /**
  *
@@ -30,7 +33,7 @@ public class PowerPackOptimization extends Application {
     private Stage primaryStage;
     private BorderPane rootLayout;
     public long calc_time;
-    
+    private TabPane tabPane = new TabPane();
     /**
      * The data as an observable list of Limitations.
      */
@@ -48,7 +51,7 @@ public class PowerPackOptimization extends Application {
         this.primaryStage.setTitle("PowerPack Optimization");
         
         initRootLayout();
-        showPowerPackOverview();
+        showMotorOverview();
         
         /**
          * Add Limitations
@@ -91,31 +94,48 @@ public class PowerPackOptimization extends Application {
             FXMLLoader loader = new FXMLLoader();
             loader.setLocation(PowerPackOptimization.class.getResource("view/RootLayout.fxml"));
             rootLayout = (BorderPane) loader.load();
-        
+            setTabs();
             // Show the scene containing the root layout.
             Scene scene = new Scene(rootLayout);
             primaryStage.setScene(scene);
             primaryStage.show();
+                    
+            // Give the controller access to the main app.
+            RootLayoutController controller = loader.getController();
+            controller.setPowerPackOptimization(this);
+            
         } catch (IOException e) {
             e.printStackTrace();
         }
+    }
+    public void setTabs(){
+        String[] tabnames = {"Motor","ECU","Costs","Calculations","Output"};
+            rootLayout.setCenter(tabPane);
+        for (String tabname : tabnames) {
+            Tab tab = new Tab();
+            tab.setText(tabname);
+            tab.setClosable(false);
+            tabPane.getTabs().add(tab);
+        }
+            
     }
     
         /**
      * Shows the person overview inside the root layout.
      */
-    public void showPowerPackOverview() {
+    public void showMotorOverview() {
         try {
             // Load person overview.
             FXMLLoader loader = new FXMLLoader();
-            loader.setLocation(PowerPackOptimization.class.getResource("view/PowerPackOverview.fxml"));
-            AnchorPane personOverview = (AnchorPane) loader.load();
-
-            // Set person overview into the center of root layout.
-            rootLayout.setCenter(personOverview);
+            loader.setLocation(PowerPackOptimization.class.getResource("view/MotorOverview.fxml"));
+            AnchorPane MotorOverview = (AnchorPane) loader.load();
             
+            // Set person overview into the center of root layout.
+            
+            //rootLayout.setCenter(MotorOverview);
+            tabPane.getTabs().get(0).setContent(MotorOverview);
             // Give the controller access to the main app.
-            PowerPackOverviewController controller = loader.getController();
+            MotorOverviewController controller = loader.getController();
             controller.setPowerPackOptimization(this);
             
         } catch (IOException e) {
