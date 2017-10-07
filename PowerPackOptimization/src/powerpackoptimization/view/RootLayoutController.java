@@ -32,6 +32,11 @@ private PowerPackOptimization powerpackOptimization;
          SaveLoadConfig.LoadConfig(powerpackOptimization);
 
         }
+    @FXML
+    private void handleSystemExit() {
+         SaveLoadConfig.SaveConfig(powerpackOptimization);
+         System.exit(0);
+        }
 
     /**
          * Is called by the main application to give a reference back to itself.

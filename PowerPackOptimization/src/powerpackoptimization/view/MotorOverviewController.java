@@ -14,7 +14,6 @@ import javafx.event.EventHandler;
 import javafx.fxml.FXML;
 import javafx.scene.control.Alert;
 import javafx.scene.control.Alert.AlertType;
-import javafx.scene.control.Label;
 import javafx.scene.control.TableColumn;
 import javafx.scene.control.TableView;
 import javafx.scene.input.MouseButton;
@@ -22,6 +21,7 @@ import javafx.scene.input.MouseEvent;
 import powerpackoptimization.PowerPackOptimization;
 import powerpackoptimization.model.Limitation;
 import powerpackoptimization.model.SaveLoadConfig;
+import powerpackoptimization.model.Wire;
 
 
 public class MotorOverviewController {
@@ -38,9 +38,15 @@ public class MotorOverviewController {
     private TableColumn<Limitation, String> MaxColumn;
     @FXML
     private TableColumn<Limitation, String> StepColumn;
+    @FXML
+    private TableView<Wire> WireTable;
+    @FXML
+    private TableColumn<Wire, String> WireDiameterColumn;
+    @FXML
+    private TableColumn<Wire, String> WireNameColumn;
     
-    @FXML 
-    private Label Nanoseconds;
+    
+    
     
      // Reference to the main application.
     private PowerPackOptimization powerpackOptimization;
@@ -69,7 +75,11 @@ public class MotorOverviewController {
         MaxColumn.setCellValueFactory(cellData -> cellData.getValue().maxProperty().asString());
         StepColumn.setCellValueFactory(cellData -> cellData.getValue().stepProperty().asString());
         
-   
+        WireNameColumn.setCellValueFactory(cellData -> cellData.getValue().NameProperty());
+        WireDiameterColumn.setCellValueFactory(cellData -> cellData.getValue().diameterProperty().asString());
+        
+        
+        
 
     }
      /**
@@ -93,6 +103,20 @@ public class MotorOverviewController {
                     }
                 }
             });
+        
+                // Add observable list data to the table
+        WireTable.setItems(powerpackOptimization.getWireData());
+        
+        WireTable.setOnMouseClicked(new EventHandler<MouseEvent>(){
+                @Override    
+                public void handle(MouseEvent mouseEvent){
+                    if(mouseEvent.getButton().equals(MouseButton.PRIMARY)){
+                        if(mouseEvent.getClickCount() == 2){
+                            handleEditWire();
+                        }
+                    }
+                }
+            });
     }
     /**
  * Called when the user clicks the edit button. Opens a dialog to edit
@@ -104,7 +128,22 @@ private void handleEditLimitation() {
     Limitation selectedLimitation = motorlimitationsTable.getSelectionModel().getSelectedItem();
     if (selectedLimitation != null) {
         powerpackOptimization.showLimitationEditDialog(selectedLimitation);
-        Nanoseconds.setText(String.valueOf(powerpackOptimization.calc_time) + " ns");
+    } else {
+        // Nothing selected.
+        Alert alert = new Alert(AlertType.WARNING);
+        alert.initOwner(powerpackOptimization.getPrimaryStage());
+        alert.setTitle("No Selection");
+        alert.setHeaderText("No Limitation Selected");
+        alert.setContentText("Please select a limitation in the table.");
+
+        alert.showAndWait();
+    }
+}
+private void handleEditWire() {
+   
+    Wire selectedWire = WireTable.getSelectionModel().getSelectedItem();
+    if (selectedWire != null) {
+        //powerpackOptimization.showLimitationEditDialog(selectedWire);
     } else {
         // Nothing selected.
         Alert alert = new Alert(AlertType.WARNING);

@@ -20,6 +20,7 @@ import javafx.scene.control.TabPane;
 import javafx.stage.Modality;
 import javafx.stage.Stage;
 import powerpackoptimization.model.Limitation;
+import powerpackoptimization.model.Wire;
 import powerpackoptimization.view.LimitationEditDialogController;
 import powerpackoptimization.view.MotorOverviewController;
 import powerpackoptimization.view.RootLayoutController;
@@ -39,6 +40,7 @@ public class PowerPackOptimization extends Application {
      */
     private final ObservableList<Limitation> MotorLimitations = FXCollections.observableArrayList();
     private final ObservableList<Limitation> ECULimitations = FXCollections.observableArrayList();
+    private final ObservableList<Wire> MotorWires = FXCollections.observableArrayList();
 
     public PowerPackOptimization() {
         this.calc_time = 0;
@@ -48,7 +50,7 @@ public class PowerPackOptimization extends Application {
     @Override
     public void start(Stage primaryStage) {
         this.primaryStage = primaryStage;
-        this.primaryStage.setTitle("PowerPack Optimization");
+        this.primaryStage.setTitle("SysOpti");
         
         initRootLayout();
         showMotorOverview();
@@ -59,7 +61,7 @@ public class PowerPackOptimization extends Application {
         
         MotorLimitations.add(new Limitation("StackLength","mm"));
         MotorLimitations.add(new Limitation("StatorInnerDiameter","mm"));
-        
+        MotorWires.add(new Wire(2.5));
         /** 
          * Measure one Calculationtime
          */
@@ -83,6 +85,10 @@ public class PowerPackOptimization extends Application {
     public ObservableList<Limitation> getECULimitationsData() {
         return ECULimitations;
     }
+    public ObservableList<Wire> getWireData() {
+        return MotorWires;
+    }
+    
     
     /**
      * Initializes the root layout.
@@ -98,6 +104,7 @@ public class PowerPackOptimization extends Application {
             // Show the scene containing the root layout.
             Scene scene = new Scene(rootLayout);
             primaryStage.setScene(scene);
+            primaryStage.setMaximized(true);
             primaryStage.show();
                     
             // Give the controller access to the main app.
@@ -111,11 +118,13 @@ public class PowerPackOptimization extends Application {
     public void setTabs(){
         String[] tabnames = {"Motor","ECU","Costs","Calculations","Output"};
             rootLayout.setCenter(tabPane);
+            
         for (String tabname : tabnames) {
             Tab tab = new Tab();
             tab.setText(tabname);
             tab.setClosable(false);
             tabPane.getTabs().add(tab);
+            
         }
             
     }
@@ -134,6 +143,8 @@ public class PowerPackOptimization extends Application {
             
             //rootLayout.setCenter(MotorOverview);
             tabPane.getTabs().get(0).setContent(MotorOverview);
+            tabPane.prefHeightProperty().bind(MotorOverview.heightProperty());
+            tabPane.prefWidthProperty().bind(MotorOverview.widthProperty());
             // Give the controller access to the main app.
             MotorOverviewController controller = loader.getController();
             controller.setPowerPackOptimization(this);
