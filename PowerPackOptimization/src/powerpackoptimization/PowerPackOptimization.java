@@ -20,9 +20,14 @@ import javafx.scene.control.TabPane;
 import javafx.stage.Modality;
 import javafx.stage.Stage;
 import powerpackoptimization.model.Limitation;
+import powerpackoptimization.model.LoadPoint;
 import powerpackoptimization.model.Wire;
+import powerpackoptimization.view.CalculationOverviewController;
+import powerpackoptimization.view.CostsOverviewController;
+import powerpackoptimization.view.ECUOverviewController;
 import powerpackoptimization.view.LimitationEditDialogController;
 import powerpackoptimization.view.MotorOverviewController;
+import powerpackoptimization.view.OutputOverviewController;
 import powerpackoptimization.view.RootLayoutController;
 
 /**
@@ -40,8 +45,9 @@ public class PowerPackOptimization extends Application {
      */
     private final ObservableList<Limitation> MotorLimitations = FXCollections.observableArrayList();
     private final ObservableList<Limitation> ECULimitations = FXCollections.observableArrayList();
-    private final ObservableList<Wire> MotorWires = FXCollections.observableArrayList();
-
+    private final ObservableList<Wire> Wires = FXCollections.observableArrayList();
+    private final ObservableList<LoadPoint> LoadPoints = FXCollections.observableArrayList();
+    
     public PowerPackOptimization() {
         this.calc_time = 0;
     }
@@ -52,8 +58,7 @@ public class PowerPackOptimization extends Application {
         this.primaryStage = primaryStage;
         this.primaryStage.setTitle("SysOpti");
         
-        initRootLayout();
-        showMotorOverview();
+       
         
         /**
          * Add Limitations
@@ -61,7 +66,13 @@ public class PowerPackOptimization extends Application {
         
         MotorLimitations.add(new Limitation("StackLength","mm"));
         MotorLimitations.add(new Limitation("StatorInnerDiameter","mm"));
-        MotorWires.add(new Wire(2.5));
+        Wires.add(new Wire(2.5));
+        LoadPoints.add(new LoadPoint("Loadpoint1",3.94,73));
+        LoadPoints.add(new LoadPoint("Loadpoint2",2.94,1833));
+        LoadPoints.add(new LoadPoint("Loadpoint3",1.84,2933));
+        
+        initRootLayout();
+        showOverview();
         /** 
          * Measure one Calculationtime
          */
@@ -86,7 +97,10 @@ public class PowerPackOptimization extends Application {
         return ECULimitations;
     }
     public ObservableList<Wire> getWireData() {
-        return MotorWires;
+        return Wires;
+    }
+     public ObservableList<LoadPoint> getLoadPointData() {
+        return LoadPoints;
     }
     
     
@@ -125,14 +139,55 @@ public class PowerPackOptimization extends Application {
             tab.setClosable(false);
             tabPane.getTabs().add(tab);
             
-        }
-            
+        }        
     }
     
         /**
      * Shows the person overview inside the root layout.
      */
-    public void showMotorOverview() {
+    public void showOverview() {
+        try {
+            // Load person overview.
+            String[] OverviewArray = {"MotorOverview","ECUOverview","CostsOverview","CalculationOverview","OutputOverview",};
+            for (int i = 0; i < OverviewArray.length; i++) {
+                
+            
+            FXMLLoader loader = new FXMLLoader(); 
+            loader.setLocation(PowerPackOptimization.class.getResource("view/"+OverviewArray[i]+".fxml"));
+            AnchorPane Overview = (AnchorPane) loader.load();
+            
+            // Set overview into the center of root layout.
+            
+            tabPane.getTabs().get(i).setContent(Overview);
+            tabPane.prefHeightProperty().bind(Overview.heightProperty());
+            tabPane.prefWidthProperty().bind(Overview.widthProperty());
+            // Give the controller access to the main app.
+                if (OverviewArray[i].equals("MotorOverview")) {
+                    MotorOverviewController controller = loader.getController();
+                    controller.setPowerPackOptimization(this);
+                }
+                if (OverviewArray[i].equals("ECUOverview")) {
+                    ECUOverviewController controller = loader.getController();
+                    controller.setPowerPackOptimization(this);
+                }
+                if (OverviewArray[i].equals("CostsOverview")) {
+                    CostsOverviewController controller = loader.getController();
+                    controller.setPowerPackOptimization(this);
+                }
+                if (OverviewArray[i].equals("CalculationOverview")) {
+                    CalculationOverviewController controller = loader.getController();
+                    controller.setPowerPackOptimization(this);
+                }
+                if (OverviewArray[i].equals("OutputOverview")) {
+                    OutputOverviewController controller = loader.getController();
+                    controller.setPowerPackOptimization(this);
+                }     
+            }
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+    }
+     public void showMotorOverview() {
         try {
             // Load person overview.
             FXMLLoader loader = new FXMLLoader();
@@ -153,6 +208,7 @@ public class PowerPackOptimization extends Application {
             e.printStackTrace();
         }
     }
+     
     
     /**
      * Returns the main stage.
@@ -204,5 +260,5 @@ public class PowerPackOptimization extends Application {
             e.printStackTrace();
         }
     }
-    
+
 }

@@ -17,6 +17,11 @@
               <MenuItem mnemonicParsing="false" onAction="#handleSystemExit" text="Close" />
             </items>
           </Menu>
+            <Menu mnemonicParsing="false" text="Report">
+              <items>
+                <MenuItem mnemonicParsing="false" text="Create Report" />
+              </items>
+            </Menu>
           <Menu mnemonicParsing="false" text="Help">
             <items>
               <MenuItem mnemonicParsing="false" text="About" />

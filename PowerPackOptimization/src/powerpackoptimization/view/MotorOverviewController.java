@@ -12,6 +12,10 @@ package powerpackoptimization.view;
 
 import javafx.event.EventHandler;
 import javafx.fxml.FXML;
+import javafx.scene.chart.LineChart;
+import javafx.scene.chart.NumberAxis;
+import javafx.scene.chart.ScatterChart;
+import javafx.scene.chart.XYChart;
 import javafx.scene.control.Alert;
 import javafx.scene.control.Alert.AlertType;
 import javafx.scene.control.TableColumn;
@@ -20,12 +24,16 @@ import javafx.scene.input.MouseButton;
 import javafx.scene.input.MouseEvent;
 import powerpackoptimization.PowerPackOptimization;
 import powerpackoptimization.model.Limitation;
+import powerpackoptimization.model.LoadPoint;
 import powerpackoptimization.model.SaveLoadConfig;
 import powerpackoptimization.model.Wire;
 
 
 public class MotorOverviewController {
   
+    
+    @FXML
+    private ScatterChart<Number,Number> loadpointChart;
     @FXML
     private TableView<Limitation> motorlimitationsTable;
     @FXML
@@ -44,6 +52,14 @@ public class MotorOverviewController {
     private TableColumn<Wire, String> WireDiameterColumn;
     @FXML
     private TableColumn<Wire, String> WireNameColumn;
+    @FXML
+    private TableView<LoadPoint> LoadPointTable;
+    @FXML
+    private TableColumn<LoadPoint, String> LoadPointNameColumn;
+    @FXML
+    private TableColumn<LoadPoint, String> LoadPointTorqueColumn;
+    @FXML
+    private TableColumn<LoadPoint, String> LoadPointRPMColumn;
     
     
     
@@ -56,10 +72,7 @@ public class MotorOverviewController {
      * The constructor is called before the initialize() method.
      */
     public MotorOverviewController(){
-        
-            
-    
-          
+             
     }
     /**
      * Initializes the controller class. This method is automatically called
@@ -78,8 +91,11 @@ public class MotorOverviewController {
         WireNameColumn.setCellValueFactory(cellData -> cellData.getValue().NameProperty());
         WireDiameterColumn.setCellValueFactory(cellData -> cellData.getValue().diameterProperty().asString());
         
+        LoadPointNameColumn.setCellValueFactory(cellData -> cellData.getValue().NameProperty());
+        LoadPointTorqueColumn.setCellValueFactory(cellData -> cellData.getValue().TorqueProperty().asString());
+        LoadPointRPMColumn.setCellValueFactory(cellData -> cellData.getValue().RPMProperty().asString()); 
         
-        
+
 
     }
      /**
@@ -117,6 +133,30 @@ public class MotorOverviewController {
                     }
                 }
             });
+        LoadPointTable.setItems(powerpackOptimization.getLoadPointData());
+        
+        LoadPointTable.setOnMouseClicked(new EventHandler<MouseEvent>(){
+                @Override    
+                public void handle(MouseEvent mouseEvent){
+                    if(mouseEvent.getButton().equals(MouseButton.PRIMARY)){
+                        if(mouseEvent.getClickCount() == 2){
+                            handleEditWire();
+                        }
+                    }
+                }
+            });
+                
+           loadpointChart.setTitle("LoadPoints");
+   
+            XYChart.Series seriesLoadPoints = new XYChart.Series();
+   
+            powerpackOptimization.getLoadPointData().forEach((loadPoint) -> {
+                seriesLoadPoints.getData().add(new XYChart.Data(loadPoint.getRPM(),loadPoint.getTorque()));
+                
+                 });
+            
+            loadpointChart.getData().add(seriesLoadPoints);
+       
     }
     /**
  * Called when the user clicks the edit button. Opens a dialog to edit

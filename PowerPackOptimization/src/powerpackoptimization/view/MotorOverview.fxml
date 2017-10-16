@@ -1,5 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
+<?import javafx.scene.effect.*?>
+<?import javafx.geometry.*?>
 <?import javafx.scene.chart.*?>
 <?import java.lang.*?>
 <?import java.util.*?>
@@ -60,27 +62,56 @@
                                     </TableView>
                                     <TableView prefHeight="200.0" prefWidth="200.0" GridPane.columnIndex="2">
                                       <columns>
-                                        <TableColumn prefWidth="170.0" text="Interfaces" />
+                                        <TableColumn prefWidth="170.0" text="Magnets" />
                                       </columns>
                                     </TableView>
                                  </children>
                               </GridPane>
                               <GridPane>
                                 <columnConstraints>
-                                  <ColumnConstraints hgrow="SOMETIMES" maxWidth="515.0" minWidth="10.0" prefWidth="347.0" />
-                                  <ColumnConstraints hgrow="SOMETIMES" maxWidth="873.0" minWidth="10.0" prefWidth="362.0" />
+                                    <ColumnConstraints hgrow="SOMETIMES" maxWidth="1.7976931348623157E308" percentWidth="20.0" />
+                                  <ColumnConstraints hgrow="SOMETIMES" maxWidth="1.7976931348623157E308" percentWidth="50.0" />
+                                  <ColumnConstraints hgrow="SOMETIMES" maxWidth="1.7976931348623157E308" percentWidth="30.0" />
                                 </columnConstraints>
                                 <rowConstraints>
                                   <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
                                 </rowConstraints>
                                  <children>
-                                    <TableView prefHeight="200.0" prefWidth="200.0" GridPane.columnIndex="1">
+                                    <TableView fx:id="LoadPointTable" GridPane.columnIndex="2">
                                       <columns>
-                                        <TableColumn minWidth="30.0" prefWidth="138.0" text="Loadpoint" />
-                                        <TableColumn text="Nm" />
-                                          <TableColumn prefWidth="163.0" text="RPM" />
+                                        <TableColumn fx:id="LoadPointNameColumn" minWidth="30.0" prefWidth="83.0" text="Loadpoint" />
+                                        <TableColumn fx:id="LoadPointTorqueColumn" prefWidth="67.0" text="Nm" />
+                                          <TableColumn fx:id="LoadPointRPMColumn" prefWidth="62.0" text="RPM" />
                                       </columns>
+                                       <GridPane.margin>
+                                          <Insets />
+                                       </GridPane.margin>
                                     </TableView>
+                                    <GridPane>
+                                      <columnConstraints>
+                                        <ColumnConstraints hgrow="SOMETIMES" percentWidth="100.0" />
+                                      </columnConstraints>
+                                      <rowConstraints>
+                                          <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
+                                        <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
+                                        <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
+                                        <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
+                                      </rowConstraints>
+                                       <children>
+                                          <Button mnemonicParsing="false" text="Add Wire" />
+                                          <Button mnemonicParsing="false" text="Add Electrical Sheet" GridPane.rowIndex="1" />
+                                          <Button mnemonicParsing="false" text="Add Magnet" GridPane.rowIndex="2" />
+                                          <Button mnemonicParsing="false" text="Add Loadpoint" GridPane.rowIndex="3" />
+                                       </children>
+                                    </GridPane>
+                                    <ScatterChart fx:id="loadpointChart" legendVisible="false" GridPane.columnIndex="1">
+                                      <xAxis>
+                                        <NumberAxis label="RPM [1]" side="BOTTOM" />
+                                      </xAxis>
+                                      <yAxis>
+                                        <NumberAxis label="Torque [Nm]" side="LEFT" />
+                                      </yAxis>
+                                    </ScatterChart>
                                  </children>
                               </GridPane>
                            </children>
